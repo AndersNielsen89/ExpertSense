@@ -50,7 +50,6 @@
           } 
           ?>
         </div>
-        </br>
         <div id="similarExperts">
           <b>Related experts</b>
           </br>
