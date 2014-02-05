@@ -1,8 +1,8 @@
-<title>Expert sense</title>
+<title>Expert Sense</title>
 <!--Site styling-->
 <link href="style/style.css" rel="stylesheet" media="screen">
 <!-- Bootstrap core CSS -->
-<title>Expert sense</title>
+
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <link rel="stylesheet" href="js/jquery-ui-1.10.3/themes/base/jquery-ui.css">
