@@ -61,6 +61,10 @@ h3{
 	text-align: center;
 }
 
+#logoAndTitle a {
+	color: inherit;
+	text-decoration:none;
+}
 #subtitle{
 	margin-left: 52px;
 }
