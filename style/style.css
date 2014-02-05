@@ -340,3 +340,12 @@ hr:before {
 	margin-left: 19px;
 	background-size: 100%;
 }
+
+#similarExperts{
+	float:left;
+	margin-left: 20px;
+}
+
+#articles{
+	float:left;
+}
