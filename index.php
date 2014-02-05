@@ -2,12 +2,12 @@
 <head>
   <?php include 'header.php'; ?>
   <script type="text/javascript" src="js/expertFinding.js"></script>
-  
+  <?php include 'php/mostSearchedRareDiseases.php'; ?>
   </head>
 
 <body>
 
-  <div class="content">
+  <div class="content_index">
 
     <div id="logoAndTitle" class="verticalTextCentering">
 
@@ -18,6 +18,17 @@
     <div id="searchElement">
           <input id="tags" onfocus="autoCompleteSetup()" value="Search for a rare disease">
           <button class="btn goButton btn-success btn-lg" onClick="goButtonClick()">Go</button>
+    </div>
+    <div id="mostSearchedRareDiseases">
+      
+      <?php
+      if(sizeof($most_searched_result_array)!=0){
+        echo "Most searched rare diseases";
+      }
+      foreach ($most_searched_result_array as &$rare_disease){
+            echo $rare_disease;
+      } 
+      ?>
     </div>
 
     <br/>

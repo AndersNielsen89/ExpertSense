@@ -1,5 +1,4 @@
 <?php
-
 $disease_chosen = strval($_GET['disease_chosen']);
 $initial_launch = strval($_GET['initialLaunch']);
 $country_filter = ((strval($_GET['countriesFilter'])) ? strval($_GET['countriesFilter']) : "");
@@ -19,6 +18,14 @@ $dbhandle = mysql_connect($hostname, $username, $password)
 or die("Unable to connect to MySQL");
 $selected = mysql_select_db($database,$dbhandle);
 //echo "SELECT name, relevance FROM expertsresult where queryId = (select id from totalQueries where query='".$disease_chosen."')  order by relevance DESC";
+
+//if initial launch update the rare disease search tracker
+if($initial_launch == "true"){
+  //if rare disease is not there, insert otherwise update the searchNumber
+  mysql_query("INSERT INTO mostSearchedRareDiseases(rareDiseaseId, searchNumber) VALUES ((SELECT id FROM totalQueries where query = '" . $disease_chosen . "'), 1) ON DUPLICATE KEY UPDATE searchNumber = searchNumber+1");
+}
+
+
 if($initial_launch == "true"){
   $result = mysql_query("SELECT name, relevance FROM expertsresult where queryId = (select id from totalQueries where query='".$disease_chosen."')  order by relevance ASC");
 }else{
