@@ -3,49 +3,70 @@ var totalCountriesString = "";
 var activityFilter = "";
 var acticlesPublishedFilterString = "";
 
-$(document).ready(function() {
 
-//$("#scrollInfoBox").notify("lol");
-$.notify.defaults({ className: "success" });
-$.notify("Scroll to load more experts",  {globalPosition:"bottom right"});
-console.log("in here");
+$.fn.scrollStopped = function(callback) {           
+        $(this).scroll(function(){
+            var self = this, $this = $(self);
+            if ($this.data('scrollTimeout')) {
+              clearTimeout($this.data('scrollTimeout'));
+            }
+            $this.data('scrollTimeout', setTimeout(callback,250,self));
+        });
+    };
 
-$(window).scroll(function(){
-    console.log("called");
-        if($(window).scrollTop() == $(document).height() - $(window).height()) {
-            console.log("in bottom");
-            
-            if (window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
-                xmlhttp=new XMLHttpRequest();
-            }
-            else{// code for IE6, IE5
-                xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-            }
-            xmlhttp.onreadystatechange=function(){
+var fired = false;
+$(window).scrollStopped(function(){
+    console.log(fired);
+    if($(window).scrollTop() == $(document).height() - $(window).height() && fired === false) {
+        console.log("in bottom");
+        
+        if (window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp=new XMLHttpRequest();
+        }
+        else{// code for IE6, IE5
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange=function(){
             if (xmlhttp.readyState==4 && xmlhttp.status==200){
                 $("#loading").text("Experts found");
-                        $("#loading").css("background", "none");
-                        var jsonResponse = eval("(" + xmlhttp.responseText + ")");
-                        $("#expertList").append(jsonResponse['expertResultsDiv']);
-                        //$("#expertList").append("<div id=loading class=updateLoader></div>");
-                        $(".updateLoader").remove();
-                        var expertCounter = 1;
-                        $( "#expertList #progressbar" ).each(function(){
-                            $(this).html(expertCounter);
-                            expertCounter += 1;
-                        });
-                        var numberOfExperts = $("#expertList #expert").length;
-                        var numberOfDocuments = jsonResponse["numberOfDocuments"];
-                        showExpertResultString(chosenDisease, numberOfExperts, numberOfDocuments);
+                fired = false;
+                $(".notifyjs-wrapper").remove();
+                $("#loading").css("background", "none");
+                var jsonResponse = eval("(" + xmlhttp.responseText + ")");
+                $("#expertList").append(jsonResponse['expertResultsDiv']);
+                var expertCounter = 1;
+                $( "#expertList #progressbar" ).each(function(){
+                    $(this).html(expertCounter);
+                    expertCounter += 1;
+                });
+                var numberOfExperts = $("#expertList #expert").length;
+                var numberOfDocuments = jsonResponse["numberOfDocuments"];
+                showExpertResultString(chosenDisease, numberOfExperts, numberOfDocuments);   
             }
         }
-
+        fired = true;
+        $.notify("Loading experts...",  {globalPosition:"bottom right", autoHideDelay: 60000});
+        $(".notifyjs-wrapper").css("display", "block");
         //document.getElementById("sicknessChosen").innerHTML="Experts for " + str;
         var numberOfExpertsScroll = $("#expertList #expert").length;
         xmlhttp.open("GET","php/populateExpertResults.php" + "?disease_chosen=" + chosenDisease + "&initialLaunch=false&countriesFilter=" + totalCountriesString + "&activityFilter=" + activityFilter + "&articlesPublishedFilter=" + acticlesPublishedFilterString + "&numberOfExperts=" + numberOfExpertsScroll,true);
         xmlhttp.send();
-           // ajax call get data from server and append to the div
-        }
+       // ajax call get data from server and append to the div
+    }
+});
+
+
+
+
+$(document).ready(function() {
+
+//$("#scrollInfoBox").notify("lol");
+$.notify.defaults({ className: "success" });
+$.notify("Scroll to load more experts",  {globalPosition:"bottom right", autoHideDelay: 4000});
+
+
+$(window).scroll(function(){
+        
     });
 
 
