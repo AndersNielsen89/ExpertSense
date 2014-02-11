@@ -244,6 +244,7 @@ function postDisease(rareDiseaseChosen){
 
   $(document).ready(function() {
     $("#tags").css("color", "grey");
+    
   });
 
   document.addEventListener('keypress', function (e) {

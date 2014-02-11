@@ -9,6 +9,7 @@
     </script>
   <script type="text/javascript" src="js/expertFinding.js"></script>
   <script type="text/javascript" src="js/expertResult.js"></script>
+  <script type="text/javascript" src="js/notify.min.js"></script>
 
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <style type="text/css">
@@ -60,6 +61,7 @@
         </div>
       </div>
     </div>
+    <div id="scrollInfoBox"></div>
 
 
 

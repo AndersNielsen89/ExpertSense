@@ -4,13 +4,13 @@ $initial_launch = strval($_GET['initialLaunch']);
 $country_filter = ((strval($_GET['countriesFilter'])) ? strval($_GET['countriesFilter']) : "");
 $activity_filter = ((strval($_GET['activityFilter'])) ? strval($_GET['activityFilter']) : "");
 $articles_published_filter = ((strval($_GET['articlesPublishedFilter'])) ? strval($_GET['articlesPublishedFilter']) : "");
-
+$number_of_experts = ((strval($_GET['numberOfExperts'])) ? strval($_GET['numberOfExperts']) : "");
 
 //echo "initial launch: " . $initial_launch . " country filter: " . $country_filter;
 
 $username = "sharemybike_dk";
 $password = "c26gxrkh";
-$hostname = "mysql23.unoeuro.com"; 
+$hostname = "mysql23.unoeuro.com";
 $database = "sharemybike_dk_db";
 
 //connection to the database
@@ -27,7 +27,7 @@ if($initial_launch == "true"){
 
 
 if($initial_launch == "true"){
-  $result = mysql_query("SELECT name, relevance FROM expertsresult where queryId = (select id from totalQueries where query='".$disease_chosen."')  order by relevance ASC");
+  $result = mysql_query("SELECT name, relevance FROM expertsresult where queryId = (select id from totalQueries where query='".$disease_chosen."')  order by relevance DESC LIMIT 0,10");
 }else{
   //echo "SELECT expertsresult.name, expertsresult.relevance, uniqueAuthors.Country, expertsresult.queryId FROM expertsresult INNER JOIN uniqueAuthors on uniqueAuthors.Name = expertsresult.name WHERE (queryId = (select id from totalQueries where query='".$disease_chosen."')) AND (Country = '" . $country_filter . "' ) order by relevance ASC";
   //echo "SELECT name, relevance FROM expertsresult where (queryId = (select id from totalQueries where query='".$disease_chosen."')) order by relevance ASC";
@@ -35,7 +35,7 @@ if($initial_launch == "true"){
   //SELECT expertsresult.name, expertsresult.relevance, uniqueAuthors.Country, expertsresult.queryId FROM expertsresult INNER JOIN uniqueAuthors on uniqueAuthors.Name = expertsresult.name WHERE (queryId = 43) AND (Country = 'United States' ) order by relevance ASC
   //$result = mysql_query("SELECT name, relevance FROM expertsresult where (queryId = (select id from totalQueries where query='".$disease_chosen."')) AND (name = (SELECT Name FROM uniqueAuthors WHERE Country = '" . $country_filter . "' ))  order by relevance ASC");
   //$result = "SELECT name, relevance FROM expertsresult where (queryId = (select id from totalQueries where query='".$disease_chosen."')) order by relevance ASC";
-  $result = mysql_query(createFilterQuery($disease_chosen, $country_filter, $activity_filter, $articles_published_filter));
+  $result = mysql_query(createFilterQuery($disease_chosen, $country_filter, $activity_filter, $articles_published_filter, $number_of_experts));
   //$result = );
   //$result =  mysql_query("SELECT expertsresult.name, expertsresult.relevance, uniqueAuthors.Country, expertsresult.queryId FROM expertsresult INNER JOIN uniqueAuthors on uniqueAuthors.Name = expertsresult.name WHERE (queryId = (select id from totalQueries where query='".$disease_chosen."')) AND (Country = '" . $country_filter . "' ) order by relevance ASC");
 }
@@ -120,9 +120,8 @@ $number_of_experts = 0;
 
     $total_experts_str_1 = include("templates/expertResultTemplate.php");
 
-    $total_experts_str = $total_experts_str_1 . $total_experts_str;
+    $total_experts_str = $total_experts_str . $total_experts_str_1;
     array_push($total_experts_list, include("templates/expertResultTemplate.php"));
-
     //calculate unique countries
 
    
@@ -184,7 +183,7 @@ echo json_encode(($experts_filters_array));
 
 
 
-function createFilterQuery($disease_chosen, $country_filters, $activity_filter, $published_number){
+function createFilterQuery($disease_chosen, $country_filters, $activity_filter, $published_number, $number_of_experts){
   
   //$error_string = 
   
@@ -225,7 +224,13 @@ function createFilterQuery($disease_chosen, $country_filters, $activity_filter, 
   //$country_filters, $activity_filter, $published_number
   //$total_query_string = "SELECT expertsresult.name, expertsresult.relevance, uniqueAuthors.Country, expertsresult.queryId FROM expertsresult INNER JOIN uniqueAuthors on uniqueAuthors.Name = expertsresult.name WHERE (queryId = (select id from totalQueries where query='".$disease_chosen."')) " . $country_filter . $activity_query_string . $published_number_query_string . " order by relevance ASC";
   //if($country_filters == ""){
-  $total_query_string = "SELECT expertsresult.name, expertsresult.relevance, uniqueAuthors.Country, uniqueAuthors.NrOfArticles, uniqueAuthors.LastPublishedDate, expertsresult.queryId FROM expertsresult INNER JOIN uniqueAuthors on uniqueAuthors.Name = expertsresult.name WHERE (queryId = (select id from totalQueries where query='".$disease_chosen."'))" . $totalFilterQuery . " order by relevance ASC";
+  if($number_of_experts){
+    $total_query_string = "SELECT expertsresult.name, expertsresult.relevance, uniqueAuthors.Country, uniqueAuthors.NrOfArticles, uniqueAuthors.LastPublishedDate, expertsresult.queryId FROM expertsresult INNER JOIN uniqueAuthors on uniqueAuthors.Name = expertsresult.name WHERE (queryId = (select id from totalQueries where query='".$disease_chosen."'))" . $totalFilterQuery . " order by relevance DESC LIMIT " . $number_of_experts . ", 10";
+  }else{
+    $total_query_string = "SELECT expertsresult.name, expertsresult.relevance, uniqueAuthors.Country, uniqueAuthors.NrOfArticles, uniqueAuthors.LastPublishedDate, expertsresult.queryId FROM expertsresult INNER JOIN uniqueAuthors on uniqueAuthors.Name = expertsresult.name WHERE (queryId = (select id from totalQueries where query='".$disease_chosen."'))" . $totalFilterQuery . " order by relevance DESC LIMIT 0,10";
+  }
+  
+  
   /*
   }else{
     if(($country_filters != "") && ($activity_filter = "") && ($published_number = "")){

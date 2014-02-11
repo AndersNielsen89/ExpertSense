@@ -1,10 +1,52 @@
 var chosenDisease = "";
+var totalCountriesString = "";
+var activityFilter = "";
+var acticlesPublishedFilterString = "";
 
 $(document).ready(function() {
 
-//console.log("in here");
+//$("#scrollInfoBox").notify("lol");
+$.notify.defaults({ className: "success" });
+$.notify("Scroll to load more experts",  {globalPosition:"bottom right"});
+console.log("in here");
 
+$(window).scroll(function(){
+    console.log("called");
+        if($(window).scrollTop() == $(document).height() - $(window).height()) {
+            console.log("in bottom");
+            
+            if (window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp=new XMLHttpRequest();
+            }
+            else{// code for IE6, IE5
+                xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange=function(){
+            if (xmlhttp.readyState==4 && xmlhttp.status==200){
+                $("#loading").text("Experts found");
+                        $("#loading").css("background", "none");
+                        var jsonResponse = eval("(" + xmlhttp.responseText + ")");
+                        $("#expertList").append(jsonResponse['expertResultsDiv']);
+                        //$("#expertList").append("<div id=loading class=updateLoader></div>");
+                        $(".updateLoader").remove();
+                        var expertCounter = 1;
+                        $( "#expertList #progressbar" ).each(function(){
+                            $(this).html(expertCounter);
+                            expertCounter += 1;
+                        });
+                        var numberOfExperts = $("#expertList #expert").length;
+                        var numberOfDocuments = jsonResponse["numberOfDocuments"];
+                        showExpertResultString(chosenDisease, numberOfExperts, numberOfDocuments);
+            }
+        }
 
+        //document.getElementById("sicknessChosen").innerHTML="Experts for " + str;
+        var numberOfExpertsScroll = $("#expertList #expert").length;
+        xmlhttp.open("GET","php/populateExpertResults.php" + "?disease_chosen=" + chosenDisease + "&initialLaunch=false&countriesFilter=" + totalCountriesString + "&activityFilter=" + activityFilter + "&articlesPublishedFilter=" + acticlesPublishedFilterString + "&numberOfExperts=" + numberOfExpertsScroll,true);
+        xmlhttp.send();
+           // ajax call get data from server and append to the div
+        }
+    });
 
 
     var map;
@@ -38,6 +80,7 @@ $(document).ready(function() {
             var numberOfDocuments = jsonResponse["numberOfDocuments"];
             showExpertResultString(chosenDisease, numberOfExperts, numberOfDocuments);
             $("#expertList").html(jsonResponse['expertResultsDiv']);
+            //$("#expertList").append("<div id=loading class=updateLoader></div>");
             var expertCounter = 1;
             $( "#expertList #progressbar" ).each(function(){
                 $(this).html(expertCounter);
@@ -76,7 +119,7 @@ $(document).ready(function() {
             $(".filters").change(function(){
                 showLoadingAnimation();
                 countriesFilter = new Array();
-                var totalCountriesString = "";
+                totalCountriesString = "";
                 $("#countryFilter input").each(function(){
                     if(this.checked){
                         var countryChecked = $(this).val();
@@ -85,7 +128,7 @@ $(document).ready(function() {
                 });
                 console.log("countriesString: " + totalCountriesString);
             
-                var activityFilter = "";
+                activityFilter = "";
                 $("#activityFilter input").each(function(){
                     if(this.checked){
                         var activityChecked = $(this).val().split(" ")[0];
@@ -93,7 +136,7 @@ $(document).ready(function() {
                     }
                 });
 
-                var acticlesPublishedFilterString = "";
+                acticlesPublishedFilterString = "";
                 $("#articlesPublishedFilter input").each(function(){
                     if(this.checked){
                         var articlesPublishedChecked = $(this).val();
@@ -120,6 +163,7 @@ $(document).ready(function() {
                         $("#loading").css("background", "none");
                         var jsonResponse = eval("(" + xmlhttpFilter.responseText + ")");
                         $("#expertList").html(jsonResponse['expertResultsDiv']);
+                        //$("#expertList").append("<div id=loading class=updateLoader></div>");
                         var expertCounter = 1;
                         $( "#expertList #progressbar" ).each(function(){
                             $(this).html(expertCounter);
@@ -131,7 +175,7 @@ $(document).ready(function() {
                     }
                 }
 
-                xmlhttpFilter.open("GET","php/populateExpertResults.php" + "?disease_chosen=" + chosenDisease + "&initialLaunch=false&countriesFilter=" + totalCountriesString + "&activityFilter=" + activityFilter + "&articlesPublishedFilter=" + acticlesPublishedFilterString,true);
+                xmlhttpFilter.open("GET","php/populateExpertResults.php" + "?disease_chosen=" + chosenDisease + "&initialLaunch=false&countriesFilter=" + totalCountriesString + "&activityFilter=" + activityFilter + "&articlesPublishedFilter=" + acticlesPublishedFilterString + "&numberOfExperts=" + "",true);
                 xmlhttpFilter.send();
             });
 
@@ -173,9 +217,9 @@ $(document).ready(function() {
         }
     }
 
-    var activityFilter = "";
-    var acticlesPublishedFilterString = "";
-    xmlhttp1.open("GET","php/populateExpertResults.php" + "?disease_chosen=" + chosenDisease + "&initialLaunch=true&countriesFilter=false" + "&activityFilter=" + activityFilter + "&articlesPublishedFilter=" + acticlesPublishedFilterString,true);
+    activityFilter = "";
+    acticlesPublishedFilterString = "";
+    xmlhttp1.open("GET","php/populateExpertResults.php" + "?disease_chosen=" + chosenDisease + "&initialLaunch=true&countriesFilter=false" + "&activityFilter=" + activityFilter + "&articlesPublishedFilter=" + acticlesPublishedFilterString + "&numberOfExperts=" + "",true);
     xmlhttp1.send();
   });
 
@@ -229,6 +273,7 @@ if (window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
             var jsonResponse = eval("(" + xmlhttp.responseText + ")");
             var numberOfExperts = jsonResponse["numberOfExperts"];
             $("#expertList").html(jsonResponse['expertResultsDiv']);
+            //$("#expertList").append("<div id=loading class=updateLoader></div>");
             var numberOfDocuments = jsonResponse["numberOfDocuments"];
             showExpertResultString(chosenDisease, numberOfExperts, numberOfDocuments);
             $("#loading").text("Experts found");
@@ -245,9 +290,9 @@ if (window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
 
     }
 
-    var activityFilter = "";
-    var acticlesPublishedFilterString = "";
-    xmlhttp.open("GET","php/populateExpertResults.php" + "?disease_chosen=" + chosenDisease + "&initialLaunch=true&countriesFilter=false" + "&activityFilter=" + activityFilter + "&articlesPublishedFilter=" + acticlesPublishedFilterString,true);
+    activityFilter = "";
+    acticlesPublishedFilterString = "";
+    xmlhttp.open("GET","php/populateExpertResults.php" + "?disease_chosen=" + chosenDisease + "&initialLaunch=true&countriesFilter=false" + "&activityFilter=" + activityFilter + "&articlesPublishedFilter=" + acticlesPublishedFilterString + "&numberOfExperts=" + "",true);
     xmlhttp.send();
 }
 
