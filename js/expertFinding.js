@@ -68,9 +68,6 @@ function updateExpertDescription(str, str2){
         $(activeId).click(
             expandExpertElement(str2)
         );
-        
-  
-
     }
     else{
         console.log("in else");
@@ -204,14 +201,12 @@ function autoCompleteSetup(){
                 availableTags = (responseStr.substring(0,responseStr.length-1)).split(',');
                 $( "#tags" ).autocomplete({
                     source: availableTags,
-
-                     
                 });
                 
                 $( "#tags" ).on( "autocompleteselect", function( event, ui ) {
-                    console.log("element chosen");
                     var rareDiseaseChosen = ui.item.value;
                     postDisease(rareDiseaseChosen);
+
                 } );
 
                 $( "#tagsResult" ).autocomplete({
@@ -237,14 +232,13 @@ function autoCompleteSetup(){
 }
 
 function postDisease(rareDiseaseChosen){
-    var rareDiseaseChosen = getRareDisease();
+    console.log("post: " + rareDiseaseChosen);
     window.location.href = "searchResult.php?disease_chosen=" + rareDiseaseChosen;
 }
 
 
   $(document).ready(function() {
     $("#tags").css("color", "grey");
-    
   });
 
   document.addEventListener('keypress', function (e) {
@@ -269,12 +263,3 @@ function goButtonClick(){
 }
 
 
-function getRareDisease(){
-    if($("#tags").val()==undefined){
-        var rareDiseaseChosen = $("#tagsResult").val();
-    }else{
-        var rareDiseaseChosen = $("#tags").val();
-    }
-    return rareDiseaseChosen;
-}
-  
