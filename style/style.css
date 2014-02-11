@@ -53,13 +53,12 @@ h3{
 #mostSearchedRareDiseases{
 	padding-top: 30px;
 	width: 250px;
-	margin: 0 auto;
+	margin: 10 auto;
 }
 
 .mostSearchedResult{
 	float:left;
-	margin:2px;
-	padding: 5px;
+	padding-right: 13px;
 }
 
 .roundedCorner{
