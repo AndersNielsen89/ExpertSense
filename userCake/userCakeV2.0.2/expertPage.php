@@ -1,3 +1,7 @@
+<?php 
+  require_once("models/config.php");
+  securePage($_SERVER['PHP_SELF']);
+?>
 <html>
 <head>
 <title>

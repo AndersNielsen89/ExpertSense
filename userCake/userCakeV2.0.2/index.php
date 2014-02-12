@@ -1,47 +1,94 @@
-<?php
-/*
-UserCake Version: 2.0.2
-http://usercake.com
-*/
+<html>
+<head>
+  <?php include 'header.php'; ?>
+  <script type="text/javascript" src="js/expertFinding.js"></script>
+  <?php include 'php/mostSearchedRareDiseases.php'; ?>
+  </head>
 
-require_once("models/config.php");
-if (!securePage($_SERVER['PHP_SELF'])){die();}
-require_once("models/header.php");
-
-echo "
 <body>
-<div id='wrapper'>
-<div id='top'><div id='logo'></div></div>
-<div id='content'>
-<h1>UserCake</h1>
-<h2>2.00</h2>
-<div id='left-nav'>";
-include("left-nav.php");
 
-echo "
+<div class="content_index">
+
+    <div id="logoAndTitle" class="verticalTextCentering">
+
+      <span><h1><a href="index.php">Expert sense</a></h1></span>
+      <div id="subtitle">Putting the sense back in experts</div>
+    </div>
+<div class="center">
+    <div id="searchElement">
+          <input id="tags" onfocus="autoCompleteSetup()" value="Search for a rare disease">
+          <button class="btn goButton btn-success btn-lg" onClick="goButtonClick()">Go</button>
+    </div>
+    <div id="mostSearchedRareDiseases">
+      
+      <?php
+      if(sizeof($most_searched_result_array)!=0){
+        echo "Most searched rare diseases";
+      }
+      foreach ($most_searched_result_array as &$rare_disease){
+            echo $rare_disease;
+      } 
+      ?>
+    </div>
+
+    <br/>
+    <br/>
+
+    <table border="0" cellpadding="3" id="tableBorder">
+      <tr>
+        <th>
+          <!--
+          Row 1
+          -->
+          <div class="list-group">
+            <div id="row1Update"></div>
+          </div>
+        </th>
+        <th>
+          <!--
+          Row 2
+          -->
+          <div id="row2Update">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class="panel-title">Expert details</h3>
+              </div>
+              <div class="panel-body" id="panel_body_id">Panel content</div>
+            </div>
+          </div>
+        </th>
+      </tr>
+    </table>
+
+    <div id="footer"> Copyright &#169; 2014 ExpertSense | <a href="about.php"> About </a></div>
+
+ </div>
+ </div>
+ <br />
+ <br/ >
+<div class="addthis_toolbox addthis_default_style share">
+<a class="addthis_button_preferred_1"></a>
+<a class="addthis_button_preferred_2"></a>
+
+<a class="addthis_button_preferred_4"></a>
+<a class="addthis_button_compact"></a>
 </div>
-<div id='main'>
-<p>Thank you for downloading UserCake. 100% Free and Opensource.</p>
-<p>Copyright (c) 2009-2012</p>
-<p>Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the 'Software'), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:</p>
-<p>The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.</p>
-<p>THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.</p>
-</div>
-<div id='bottom'></div>
-</div>
+
+    
+   <!--  <div id="asyncExperts">
+      
+    </div>
+    <button onclick="queryModel()">Click me</button> -->
+  
+<!-- AddThis Button BEGIN -->
+
+
+<script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52f251df064b2ed1"></script>
+<!-- AddThis Button END -->
+
 </body>
-</html>";
+  </html>
 
-?>
+
+

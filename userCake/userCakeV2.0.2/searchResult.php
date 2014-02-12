@@ -1,3 +1,14 @@
+<?php 
+  require_once("models/config.php");
+  
+  $disease_chosen = strval($_GET['disease_chosen']);
+  //Prevent the user visiting the logged in page if he/she is already logged in
+  if(!isUserLoggedIn()){
+    if(!(($disease_chosen == 'Acute Intermittent Porphyria') || ($disease_chosen == 'Cystic Fibrosis') || ($disease_chosen == 'Sickle cell disease'))){
+      securePage($_SERVER['PHP_SELF']);
+    }
+  }
+?>
 <html>
 <head>
   <title>
