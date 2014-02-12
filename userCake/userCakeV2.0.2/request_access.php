@@ -1,6 +1,9 @@
 <html>
 <head>
-  <?php include 'header.php'; ?>
+  <?php
+    include 'header.php';
+    include 'login_header.php';
+  ?>
   <script type="text/javascript" src="js/expertFinding.js"></script>
   <?php include 'php/mostSearchedRareDiseases.php'; ?>
   </head>
