@@ -9,18 +9,8 @@
     </title>
   <?php include 'header.php'; ?>
   <?php include 'php/expertPageBackend.php'; ?>
-  <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADJ1OOwHiXBPNkvB2gw8e4POhoyM-8tDo&sensor=false">
-    </script>
+
   <script type="text/javascript" src="js/expertFinding.js"></script>
-
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <style type="text/css">
-      html { height: 100% }
-      body { height: 100%; margin: 0; padding: 0 }
-      #map-canvas { height: 300px; width: 120px; }
-    </style>
-
     
 </head>
 
