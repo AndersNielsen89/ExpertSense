@@ -1,4 +1,6 @@
 <?php
+include 'login_header.php';
+echo "<script type=\"text/javascript\" src=\"js/expertFinding.js\"></script>";
 echo "
 <div id='logoAndTitle' class='verticalTextCentering'>
 
