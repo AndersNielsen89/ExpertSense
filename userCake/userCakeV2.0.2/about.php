@@ -1,6 +1,8 @@
 <html>
 <head>
-	<?php include 'header.php'; ?>
+	<?php include 'header.php'; 
+	include 'login_header.php';?>
+
 	<script type="text/javascript" src="js/expertFinding.js"></script>
 	<script type="text/javascript" src="js/mail.js"></script>
 
@@ -39,7 +41,7 @@
 
 	<h3>Credits</h3><br />
 	This site and all concepts behind it have been developed in collaboration with FindWise AB and Rare Disease Management. <br />
-	It originated from a project made at DTU Compute with Ole Winther, Ph.D, as our supervisor.<br />
+	It originated from a project made at DTU Compute with Ole Winther, PhD, as our supervisor.<br />
 	</div>
 	
 </div>
