@@ -102,13 +102,16 @@ if(!empty($_POST))
 }
 
 require_once("models/header.php");
+
 echo "
 <body>
-<div id='wrapper'>
-<div id='top'><div id='logo'></div></div>
+<div id='wrapper'>";
+include 'header.php';
+include('expertHeader.php');
+
+echo "
 <div id='content'>
-<h1>UserCake</h1>
-<h2>User Settings</h2>
+
 <div id='left-nav'>";
 include("left-nav.php");
 
