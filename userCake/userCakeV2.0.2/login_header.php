@@ -14,7 +14,7 @@ else {
 	echo "
 		<ul class=loginHeader>
 			<li class=loginElement><a href='login.php'>Login</a></li>
-			<li class=loginElement><a href='register.php'>Request Access</a></li>
+			<li class=loginElement><a href='request_access.php'>Request Access</a></li>
 		</ul>
 	";
 }
