@@ -26,6 +26,12 @@ if(isUserLoggedIn()) {
 	<li><a href='newUser.php'>Add new user</a></li>
 	</ul>";
 	}
+	if ($loggedInUser->checkPermission(array(4))){ // Permissions for Jeff
+		echo "
+	<ul>
+		<li><a href='newUser.php'>Add new user</a></li>
+	</ul>";
+	}
 } 
 //Links for users not logged in
 else {
