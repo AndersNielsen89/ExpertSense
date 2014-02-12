@@ -1150,7 +1150,7 @@ function securePage($uri){
 	//If user is not logged in, deny access
 	elseif(!isUserLoggedIn()) 
 	{
-		header("Location: login.php");
+		header("Location: access_denied.php");
 		return false;
 	}
 	else {

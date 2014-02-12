@@ -24,6 +24,7 @@ if(isUserLoggedIn()) {
 	<li><a href='admin_permissions.php'>Admin Permissions</a></li>
 	<li><a href='admin_pages.php'>Admin Pages</a></li>
 	<li><a href='newUser.php'>Add new user</a></li>
+	<li><a href='index.php'>Front page</a></li>
 	</ul>";
 	}
 	if ($loggedInUser->checkPermission(array(4))){ // Permissions for Jeff

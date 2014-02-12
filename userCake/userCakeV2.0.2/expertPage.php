@@ -1,5 +1,5 @@
 <?php 
-  require_once("models/config.php");
+  include 'login_header.php';
   securePage($_SERVER['PHP_SELF']);
 ?>
 <html>

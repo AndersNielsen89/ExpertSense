@@ -1,6 +1,5 @@
 <?php 
-  require_once("models/config.php");
-  
+  include 'login_header.php';  
   $disease_chosen = strval($_GET['disease_chosen']);
   //Prevent the user visiting the logged in page if he/she is already logged in
   if(!isUserLoggedIn()){
