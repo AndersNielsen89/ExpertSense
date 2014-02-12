@@ -177,7 +177,7 @@ a.list-group-item.active, a.list-group-item.active:hover, a.list-group-item.acti
 	border-radius: 5px;
 	height: 40px;
 	width:275px;
-	/*padding: 19px;*/
+	padding-left: 5px;
 	border-style: solid;
 	border-color:grey;
 	border-width: 1px;

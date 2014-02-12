@@ -263,3 +263,11 @@ function goButtonClick(){
 }
 
 
+function getRareDisease(){
+    if($("#tags").val()==undefined){
+        var rareDiseaseChosen = $("#tagsResult").val();
+    }else{
+        var rareDiseaseChosen = $("#tags").val();
+    }
+    return rareDiseaseChosen;
+}

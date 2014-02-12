@@ -31,7 +31,7 @@ $(window).scrollStopped(function(){
                 $("#loading").text("Experts found");
                 fired = false;
                 $(".notifyjs-wrapper").remove();
-                $("#loading").css("background", "none");
+                //$("#loading").css("background", "none");
                 var jsonResponse = eval("(" + xmlhttp.responseText + ")");
                 $("#expertList").append(jsonResponse['expertResultsDiv']);
                 var expertCounter = 1;
@@ -65,9 +65,6 @@ $.notify.defaults({ className: "success" });
 $.notify("Scroll to load more experts",  {globalPosition:"bottom right", autoHideDelay: 4000});
 
 
-$(window).scroll(function(){
-        
-    });
 
 
     var map;
@@ -139,6 +136,8 @@ $(window).scroll(function(){
 
             $(".filters").change(function(){
                 showLoadingAnimation();
+
+                //$("#loading").css("display", "block");
                 countriesFilter = new Array();
                 totalCountriesString = "";
                 $("#countryFilter input").each(function(){
@@ -166,10 +165,6 @@ $(window).scroll(function(){
                 });
 
 
-
-
-                
-
                 if (window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
                     xmlhttpFilter=new XMLHttpRequest();
                 }
@@ -179,8 +174,7 @@ $(window).scroll(function(){
                 xmlhttpFilter.onreadystatechange=function(){
                     //filters applied
                     if (xmlhttpFilter.readyState==4 && xmlhttpFilter.status==200){
-                        //$("#loading").css("display", "none");
-                        $("#loading").text("Experts found");
+                        $("#loading").text("Experts foundasd");
                         $("#loading").css("background", "none");
                         var jsonResponse = eval("(" + xmlhttpFilter.responseText + ")");
                         $("#expertList").html(jsonResponse['expertResultsDiv']);
@@ -200,8 +194,6 @@ $(window).scroll(function(){
                 xmlhttpFilter.send();
             });
 
-
-            //$("#loading").css("display", "none");
             $("#loading").css("background", "none");
 
 
@@ -277,10 +269,7 @@ function showExpertResultString(sicknessChosen, numberOfExperts, numberOfDocumen
 function resetFilters(){
     showLoadingAnimation();
     $("#loadingFilter").css("display", "block");
-    
     console.log("resetting filters");
-
-
 
 if (window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
         xmlhttp=new XMLHttpRequest();
@@ -328,16 +317,9 @@ function removeCheckedInputs(){
     $("#articlesPublishedFilter input").each(function(input){
         $(this).prop('checked', false);
     });
-    
-    
 }
 
 function showLoadingAnimation(){
-    $('#loading').css('background', 'url(images/301.gif) no-repeat left');
+    $('#loading').css('background', 'url(images/301.gif) no-repeat scroll right center / 15px 15px');
     $("#loading").text("Finding experts");
-    $('#loading').css('background-size', '15px 15px');
-    $('#loading').css('background-position-x', '110');
-    $('#loading').css('background-position-y', '5');  
-    
-      
 }
